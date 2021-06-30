@@ -1,1 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mall?autoReconnect=true&useUnicode=true&characterEncoding=utf8
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 1000
+    #        use_sql_comments: true
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hivernate.type: trace
