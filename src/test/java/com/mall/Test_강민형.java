@@ -85,8 +85,8 @@ class Test_강민형 {
         em.clear();
         ShopRequest shopRequest = new ShopRequest("이케아", new Location(Location.Dong.A, 1, 104), 1L);
         Shop shop = shopService.registerShop(shopRequest);
-
         ShopRequest shopUpdateRequest = new ShopRequest(shop.getId(), "롯데마트", new Location(Location.Dong.B, 2, 201), 1L);
+
         //when
         Shop updated = shopService.updateShop(shopUpdateRequest);
 
