@@ -27,10 +27,9 @@
 `{branch header}/{issue number}/{short description}`
 
 - branch header rule
-  - master : 배포 가능한 상태의 브랜치 -> `team10`, `dev`, `backend`, `frontend`
-  - develop : 개발을 진행하는 브랜치 -> 이 프로젝트에서는 `master` 브랜치와 동일하므로 생략
+  - main : 배포 가능한 상태의 브랜치
+  - develop : 개발을 진행하는 브랜치
   - feature : 새로운 기능 개발 및 버그 수정이 필요할 때마다 `develop` 브랜치로부터 분기
-    -> 하지만 `develop`대신에 새로운 기능 개발 시 그냥 `feature` 사용
   - hotfix : `master`(배포 가능한 상태)에서 긴급하게 수정을 해야할 경우 `master`로부터 분기
   - release : 이번 출시 버전을 준비하는 브랜치, 이번 프로젝트에서는 사용 x
 
