@@ -1,6 +1,7 @@
 package com.mall.shop.entity;
 
 import com.mall.base.Base;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -18,7 +19,14 @@ public class Category extends Base implements Serializable {
     public Category() {
     }
 
+    @Builder
     public Category(String label) {
+        this.label = label;
+    }
+
+    @Builder
+    public Category(Long id, String label) {
+        super(id);
         this.label = label;
     }
 }

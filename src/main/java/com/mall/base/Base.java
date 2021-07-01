@@ -16,4 +16,11 @@ abstract public class Base {
     private Long id;
 
     private final ZonedDateTime createdAt = ZonedDateTime.now();
+
+    public Base() {
+    }
+
+    public Base(Long id) {
+        this.id = id;
+    }
 }

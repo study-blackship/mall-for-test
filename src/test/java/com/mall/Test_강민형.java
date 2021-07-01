@@ -6,6 +6,7 @@ import com.mall.shop.entity.Shop;
 import com.mall.shop.mapper.ShopMapper;
 import com.mall.shop.repository.CategoryRepository;
 import com.mall.shop.request.ShopRequest;
+import com.mall.shop.response.ShopResponse;
 import com.mall.shop.service.ShopService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,7 @@ class Test_강민형 {
         ShopRequest shopRequest = new ShopRequest("이케아", new Location(Location.Dong.A, 1, 104), 1L);
 
         //when
-        Shop shop = shopService.registerShop(shopRequest);
+        ShopResponse shop = shopService.registerShop(shopRequest);
 
         //then
         assertThat(shop, is(notNullValue()));
@@ -84,7 +85,7 @@ class Test_강민형 {
         em.flush();
         em.clear();
         ShopRequest shopRequest = new ShopRequest("이케아", new Location(Location.Dong.A, 1, 104), 1L);
-        Shop shop = shopService.registerShop(shopRequest);
+        ShopResponse shop = shopService.registerShop(shopRequest);
         ShopRequest shopUpdateRequest = new ShopRequest(shop.getId(), "롯데마트", new Location(Location.Dong.B, 2, 201), 1L);
 
         //when
