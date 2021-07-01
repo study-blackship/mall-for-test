@@ -1,7 +1,10 @@
 package com.mall.shop.entity;
 
 import com.mall.base.Base;
+import com.mall.shop.request.ShopRequest;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +14,8 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "SHOP")
+@Getter
+@ToString
 public class Shop extends Base implements Serializable {
     private String label;
 
@@ -26,6 +31,15 @@ public class Shop extends Base implements Serializable {
     public Shop(String label, Location location, Category category) {
         this.label = label;
         this.location = location;
+        this.category = category;
+    }
+
+    public void update(ShopRequest shopRequest) {
+        this.label = shopRequest.getLabel();
+        this.location = shopRequest.getLocation();
+    }
+
+    public void joinCategory(Category category) {
         this.category = category;
     }
 }
