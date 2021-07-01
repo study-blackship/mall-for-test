@@ -3,11 +3,14 @@ package com.mall.shop.entity;
 import lombok.Builder;
 
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Embeddable
 public class Location {
     enum Dong {A, B, C, D}
 
+    @Enumerated(EnumType.STRING)
     private Dong dong;
 
     private Integer floor;
