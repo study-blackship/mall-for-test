@@ -26,7 +26,6 @@ public class ShopService {
     public ShopResponse registerShop(ShopRequest shopRequest) {
         Shop shop = ShopMapper.INSTANCE.requestToShop(shopRequest);
         shop.joinCategory(categoryRepository.findById(shopRequest.getCategoryId()).orElseThrow());
-//        CategoryResponse categoryResponse = CategoryMapper.INSTANCE.categoryToResponse(shop.getCategory());
         return ShopMapper.INSTANCE.shopToResponse(shopRepository.save(shop));
     }
 

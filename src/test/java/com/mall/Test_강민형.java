@@ -11,8 +11,10 @@ import com.mall.shop.service.ShopService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,6 +23,7 @@ import static org.hamcrest.Matchers.notNullValue;
 
 @SpringBootTest
 @Transactional
+@Rollback
 class Test_강민형 {
 
     @Autowired
@@ -40,7 +43,7 @@ class Test_강민형 {
         em.flush();
         em.clear();
 
-        ShopRequest shopRequest = new ShopRequest("이케아", new Location(Location.Dong.A, 1, 104), 1L);
+        ShopRequest shopRequest = new ShopRequest("이케아", new Location(Location.Dong.A, 1, 104), category.getId());
 
         //when
         Shop shop = ShopMapper.INSTANCE.requestToShop(shopRequest);
@@ -63,10 +66,11 @@ class Test_강민형 {
         em.persist(category);
         em.flush();
         em.clear();
-        ShopRequest shopRequest = new ShopRequest("이케아", new Location(Location.Dong.A, 1, 104), 1L);
+        ShopRequest shopRequest = new ShopRequest("이케아", new Location(Location.Dong.A, 1, 104), category.getId());
 
         //when
         ShopResponse shop = shopService.registerShop(shopRequest);
+        System.out.println(shop);
 
         //then
         assertThat(shop, is(notNullValue()));
@@ -84,12 +88,13 @@ class Test_강민형 {
         em.persist(category);
         em.flush();
         em.clear();
-        ShopRequest shopRequest = new ShopRequest("이케아", new Location(Location.Dong.A, 1, 104), 1L);
+        ShopRequest shopRequest = new ShopRequest("이케아", new Location(Location.Dong.A, 1, 104), category.getId());
         ShopResponse shop = shopService.registerShop(shopRequest);
-        ShopRequest shopUpdateRequest = new ShopRequest(shop.getId(), "롯데마트", new Location(Location.Dong.B, 2, 201), 1L);
+        ShopRequest shopUpdateRequest = new ShopRequest(shop.getId(), "롯데마트", new Location(Location.Dong.B, 2, 201), category.getId());
 
         //when
         Shop updated = shopService.updateShop(shopUpdateRequest);
+        System.out.println(updated);
 
         //then
         assertThat(updated, is(notNullValue()));

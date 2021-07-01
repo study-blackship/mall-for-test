@@ -5,8 +5,10 @@ import com.mall.shop.entity.Location;
 import com.mall.shop.mapper.CategoryMapper;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class ShopResponse {
     private Long id;
     private String label;
