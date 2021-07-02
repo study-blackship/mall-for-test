@@ -14,12 +14,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
@@ -49,14 +46,13 @@ class Test_강민형 {
         Shop shop = ShopMapper.INSTANCE.requestToShop(shopRequest);
         shop.joinCategory(categoryRepository.findById(1L).orElseThrow());
 
-
         //then
-        assertThat(shop, is(notNullValue()));
-        assertThat(shop.getLabel(), is(shopRequest.getLabel()));
-        assertThat(shop.getLocation().getDong(), is(shopRequest.getLocation().getDong()));
-        assertThat(shop.getLocation().getHo(), is(shopRequest.getLocation().getHo()));
-        assertThat(shop.getLocation().getFloor(), is(shopRequest.getLocation().getFloor()));
-        assertThat(shop.getCategory().getLabel(), is(category.getLabel()));
+        assertThat(shop).isNotNull();
+        assertThat(shop.getLabel()).isEqualTo(shopRequest.getLabel());
+        assertThat(shop.getLocation().getDong()).isEqualTo(shopRequest.getLocation().getDong());
+        assertThat(shop.getLocation().getHo()).isEqualTo(shopRequest.getLocation().getHo());
+        assertThat(shop.getLocation().getFloor()).isEqualTo(shopRequest.getLocation().getFloor());
+        assertThat(shop.getCategory().getLabel()).isEqualTo(category.getLabel());
     }
 
     @Test
@@ -73,12 +69,12 @@ class Test_강민형 {
         System.out.println(shop);
 
         //then
-        assertThat(shop, is(notNullValue()));
-        assertThat(shop.getLabel(), is(shopRequest.getLabel()));
-        assertThat(shop.getLocation().getDong(), is(shopRequest.getLocation().getDong()));
-        assertThat(shop.getLocation().getHo(), is(shopRequest.getLocation().getHo()));
-        assertThat(shop.getLocation().getFloor(), is(shopRequest.getLocation().getFloor()));
-        assertThat(shop.getCategory().getLabel(), is(category.getLabel()));
+        assertThat(shop).isNotNull();
+        assertThat(shop.getLabel()).isEqualTo(shopRequest.getLabel());
+        assertThat(shop.getLocation().getDong()).isEqualTo(shopRequest.getLocation().getDong());
+        assertThat(shop.getLocation().getHo()).isEqualTo(shopRequest.getLocation().getHo());
+        assertThat(shop.getLocation().getFloor()).isEqualTo(shopRequest.getLocation().getFloor());
+        assertThat(shop.getCategory().getLabel()).isEqualTo(category.getLabel());
     }
 
     @Test
@@ -97,12 +93,12 @@ class Test_강민형 {
         System.out.println(updated);
 
         //then
-        assertThat(updated, is(notNullValue()));
-        assertThat(updated.getLabel(), is(shopUpdateRequest.getLabel()));
-        assertThat(updated.getLocation().getDong(), is(shopUpdateRequest.getLocation().getDong()));
-        assertThat(updated.getLocation().getHo(), is(shopUpdateRequest.getLocation().getHo()));
-        assertThat(updated.getLocation().getFloor(), is(shopUpdateRequest.getLocation().getFloor()));
-        assertThat(updated.getCategory().getLabel(), is(category.getLabel()));
+        assertThat(shop).isNotNull();
+        assertThat(shop.getLabel()).isEqualTo(shopRequest.getLabel());
+        assertThat(shop.getLocation().getDong()).isEqualTo(shopRequest.getLocation().getDong());
+        assertThat(shop.getLocation().getHo()).isEqualTo(shopRequest.getLocation().getHo());
+        assertThat(shop.getLocation().getFloor()).isEqualTo(shopRequest.getLocation().getFloor());
+        assertThat(shop.getCategory().getLabel()).isEqualTo(category.getLabel());
     }
 
 }
