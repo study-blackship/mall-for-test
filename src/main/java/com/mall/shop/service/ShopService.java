@@ -1,13 +1,16 @@
 package com.mall.shop.service;
 
+import com.mall.base.PageRequest;
 import com.mall.shop.entity.Product;
 import com.mall.shop.entity.Shop;
 import com.mall.shop.mapper.ShopMapper;
 import com.mall.shop.repository.CategoryRepository;
 import com.mall.shop.repository.ProductRepository;
 import com.mall.shop.repository.ShopRepository;
+import com.mall.shop.request.ShopCondition;
 import com.mall.shop.request.ShopRequest;
 import com.mall.shop.response.ShopResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,6 +26,10 @@ public class ShopService {
         this.shopRepository = shopRepository;
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
+    }
+
+    public Page<ShopResponse> selectByCondition(ShopCondition condition, PageRequest pageRequest) {
+        return shopRepository.selectByCondition(condition, pageRequest.of()).map(ShopMapper.INSTANCE::shopToResponse);
     }
 
     public ShopResponse registerShop(ShopRequest shopRequest) {
