@@ -108,12 +108,17 @@ class Test_강민형 {
         ShopResponse shop = shopService.registerShop(shopRequest);
 
         //then
-        assertThat(shop).isNotNull();
-        assertThat(shop.getLabel()).isEqualTo(shopRequest.getLabel());
-        assertThat(shop.getLocation().getDong()).isEqualTo(shopRequest.getLocation().getDong());
-        assertThat(shop.getLocation().getHo()).isEqualTo(shopRequest.getLocation().getHo());
-        assertThat(shop.getLocation().getFloor()).isEqualTo(shopRequest.getLocation().getFloor());
-        assertThat(shop.getCategory().getLabel()).isEqualTo(category.getLabel());
+        JPAQueryFactory query = new JPAQueryFactory(em);
+        Shop registered = query.selectFrom(QShop.shop)
+                .where(QShop.shop.id.eq(shop.getId()))
+                .fetchOne();
+
+        assertThat(registered).isNotNull();
+        assertThat(registered.getLabel()).isEqualTo(shopRequest.getLabel());
+        assertThat(registered.getLocation().getDong()).isEqualTo(shopRequest.getLocation().getDong());
+        assertThat(registered.getLocation().getHo()).isEqualTo(shopRequest.getLocation().getHo());
+        assertThat(registered.getLocation().getFloor()).isEqualTo(shopRequest.getLocation().getFloor());
+        assertThat(registered.getCategory().getLabel()).isEqualTo(category.getLabel());
     }
 
     @Test
