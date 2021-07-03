@@ -1,13 +1,13 @@
 package com.mall;
 
-import com.mall.shop.entity.Category;
-import com.mall.shop.entity.Location;
-import com.mall.shop.entity.Shop;
+import com.mall.base.Money;
+import com.mall.shop.entity.*;
 import com.mall.shop.mapper.ShopMapper;
 import com.mall.shop.repository.CategoryRepository;
 import com.mall.shop.request.ShopRequest;
 import com.mall.shop.response.ShopResponse;
 import com.mall.shop.service.ShopService;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +15,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -89,16 +90,54 @@ class Test_강민형 {
         ShopRequest shopUpdateRequest = new ShopRequest(shop.getId(), "롯데마트", new Location(Location.Dong.B, 2, 201), category.getId());
 
         //when
-        Shop updated = shopService.updateShop(shopUpdateRequest);
-        System.out.println(updated);
+        shopService.updateShop(shopUpdateRequest);
 
         //then
-        assertThat(shop).isNotNull();
-        assertThat(shop.getLabel()).isEqualTo(shopRequest.getLabel());
-        assertThat(shop.getLocation().getDong()).isEqualTo(shopRequest.getLocation().getDong());
-        assertThat(shop.getLocation().getHo()).isEqualTo(shopRequest.getLocation().getHo());
-        assertThat(shop.getLocation().getFloor()).isEqualTo(shopRequest.getLocation().getFloor());
-        assertThat(shop.getCategory().getLabel()).isEqualTo(category.getLabel());
+        JPAQueryFactory query = new JPAQueryFactory(em);
+
+        Shop updated = query.selectFrom(QShop.shop)
+                .where(QShop.shop.id.eq(shop.getId()))
+                .fetchOne();
+
+        assertThat(updated).isNotNull();
+        assertThat(updated.getLabel()).isEqualTo(shopUpdateRequest.getLabel());
+        assertThat(updated.getLocation().getDong()).isEqualTo(shopUpdateRequest.getLocation().getDong());
+        assertThat(updated.getLocation().getHo()).isEqualTo(shopUpdateRequest.getLocation().getHo());
+        assertThat(updated.getLocation().getFloor()).isEqualTo(shopUpdateRequest.getLocation().getFloor());
+        assertThat(updated.getCategory().getLabel()).isEqualTo(category.getLabel());
+    }
+
+    @Test
+    void Shop을_삭제() {
+        //given
+        Category category = new Category("침구류");
+        em.persist(category);
+
+        Shop shop = new Shop("이케아", new Location(Location.Dong.A, 1, 104), category);
+        em.persist(shop);
+
+        Product product = new Product(Money.wons(10000), "침대", shop);
+        em.persist(product);
+
+        em.flush();
+        em.clear();
+
+        //when
+        shopService.deleteShop(shop.getId());
+
+        //then
+        JPAQueryFactory query = new JPAQueryFactory(em);
+
+        List<Shop> shops = query.selectFrom(QShop.shop)
+                .where(QShop.shop.id.eq(shop.getId()))
+                .fetch();
+
+        List<Product> products = query.selectFrom(QProduct.product)
+                .where(QProduct.product.shop.id.eq(shop.getId()))
+                .fetch();
+
+        assertThat(shops).isEmpty();
+        products.forEach(p -> assertThat(p.getShop()).isNull());
     }
 
 }
