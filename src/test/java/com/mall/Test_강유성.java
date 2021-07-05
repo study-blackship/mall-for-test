@@ -2,20 +2,27 @@ package com.mall;
 
 import com.mall.customer.entity.Address;
 import com.mall.customer.entity.Customer;
+import com.mall.customer.repository.CustomerRepository;
+import com.mall.customer.service.CustomerService;
 import com.mall.customer.service.dto.CustomerDto;
 import com.mall.customer.service.mapper.CustomerServiceMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.ZonedDateTime;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
+@ExtendWith(MockitoExtension.class)
 public class Test_강유성 {
 
     private final CustomerServiceMapper mapper = Mappers.getMapper(CustomerServiceMapper.class);
-
+    private final CustomerRepository repository = Mockito.mock(CustomerRepository.class);
+    private final CustomerService service = new CustomerService(repository, mapper);
 
     @Test
     @DisplayName("MapStruct Test")
