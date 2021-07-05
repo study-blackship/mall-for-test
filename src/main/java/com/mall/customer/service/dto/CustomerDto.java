@@ -11,7 +11,7 @@ public class CustomerDto {
 
     private Long id;
 
-    private final ZonedDateTime createdAt;
+    private ZonedDateTime createdAt;
 
     private String name;
 
