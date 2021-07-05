@@ -23,7 +23,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public List<CustomerDto> selectCustomer() {
+    public List<CustomerDto> selectCustomerList() {
         return customerRepository.findAll().stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());

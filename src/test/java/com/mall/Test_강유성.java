@@ -90,4 +90,57 @@ public class Test_강유성 {
         assertThat(customerDto.getAddress().getStreet()).isEqualTo(dto.getAddress().getStreet());
         assertThat(customerDto.getBirth()).isEqualTo(dto.getBirth());
     }
+
+    @Test
+    @DisplayName("모든 Customer 조회")
+    void selectCustomerList() {
+        // given
+        Customer 승훈 = Customer.builder()
+                .name("최강승훈")
+                .birth(ZonedDateTime.of(LocalDate.of(1999, 12, 25), LocalTime.MAX, ZoneId.of("Asia/Seoul")))
+                .address(Address.builder()
+                        .city("서울특별시")
+                        .street("영등포구 선유로")
+                        .detail("더파이러츠")
+                        .build())
+                .build();
+
+        Customer 민형 = Customer.builder()
+                .name("대장민형")
+                .birth(ZonedDateTime.of(LocalDate.of(1999, 12, 25), LocalTime.MAX, ZoneId.of("Asia/Seoul")))
+                .address(Address.builder()
+                        .city("서울특별시")
+                        .street("영등포구 선유로")
+                        .detail("더파이러츠")
+                        .build())
+                .build();
+
+        Customer 현성 = Customer.builder()
+                .name("빛현성")
+                .birth(ZonedDateTime.of(LocalDate.of(1999, 12, 25), LocalTime.MAX, ZoneId.of("Asia/Seoul")))
+                .address(Address.builder()
+                        .city("서울특별시")
+                        .street("영등포구 선유로")
+                        .detail("더파이러츠")
+                        .build())
+                .build();
+
+        db.add(승훈);
+        db.add(민형);
+        db.add(현성);
+
+        when(repository.findAll()).thenReturn(db);
+        // when
+        List<CustomerDto> result = service.selectCustomerList();
+
+        // then
+        for (int i = 0; i < result.size(); i++) { // TODO: 테스트 방식 수정
+            assertThat(result.get(i).getName()).isEqualTo(db.get(i).getName());
+            assertThat(result.get(i).getAddress().getCity()).isEqualTo(db.get(i).getAddress().getCity());
+            assertThat(result.get(i).getAddress().getDetail()).isEqualTo(db.get(i).getAddress().getDetail());
+            assertThat(result.get(i).getAddress().getStreet()).isEqualTo(db.get(i).getAddress().getStreet());
+            assertThat(result.get(i).getBirth()).isEqualTo(db.get(i).getBirth());
+        }
+
+    }
 }
