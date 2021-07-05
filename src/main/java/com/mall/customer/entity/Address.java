@@ -1,10 +1,12 @@
 package com.mall.customer.entity;
 
 import lombok.Builder;
+import lombok.Getter;
 
 import javax.persistence.Embeddable;
 
 @Embeddable
+@Getter
 public class Address {
     private String city;
 
