@@ -1,6 +1,7 @@
 package com.mall.base;
 
 import lombok.Getter;
+import lombok.ToString;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +11,7 @@ import java.time.ZonedDateTime;
 
 @MappedSuperclass
 @Getter
+@ToString
 abstract public class Base {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
