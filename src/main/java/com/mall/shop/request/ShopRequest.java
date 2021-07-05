@@ -1,6 +1,7 @@
 package com.mall.shop.request;
 
 import com.mall.shop.entity.Location;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
@@ -19,6 +20,7 @@ public class ShopRequest {
         this.categoryId = categoryId;
     }
 
+    @Builder
     public ShopRequest(Long id, String label, Location location, Long categoryId) {
         this.id = id;
         this.label = label;

@@ -9,13 +9,15 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import static com.mall.shop.entity.QShop.shop;
+import static org.springframework.util.StringUtils.*;
 
 @Repository
-public class ShopRepositoryImpl extends Querydsl4RepositorySupport implements ShopRepositoryQD {
+public class ShopRepositoryQDImpl extends Querydsl4RepositorySupport implements ShopRepositoryQD {
 
-    public ShopRepositoryImpl() {
+    public ShopRepositoryQDImpl() {
         super(Shop.class);
     }
 
@@ -34,7 +36,7 @@ public class ShopRepositoryImpl extends Querydsl4RepositorySupport implements Sh
     }
 
     private BooleanExpression labelContains(String label) {
-        if (label.isEmpty()) return null;
+        if (!hasText(label)) return null;
         return shop.label.contains(label);
     }
 

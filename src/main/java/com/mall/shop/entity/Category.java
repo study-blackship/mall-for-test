@@ -19,8 +19,13 @@ public class Category extends Base implements Serializable {
     public Category() {
     }
 
-    @Builder
     public Category(String label) {
+        this.label = label;
+    }
+
+    @Builder
+    public Category(Long id, String label) {
+        super(id);
         this.label = label;
     }
 }
