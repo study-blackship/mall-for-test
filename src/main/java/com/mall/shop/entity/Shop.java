@@ -28,8 +28,7 @@ public class Shop extends Base implements Serializable {
     }
 
     @Builder
-    public Shop(Long id, String label, Location location, Category category) {
-        super(id);
+    public Shop(String label, Location location, Category category) {
         this.label = label;
         this.location = location;
         this.category = category;
