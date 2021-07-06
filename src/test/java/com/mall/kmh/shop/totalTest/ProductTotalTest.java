@@ -54,12 +54,15 @@ public class ProductTotalTest {
 
         //when
         ProductCondition productCondition = ProductCondition.builder()
-                .label("수류탄")
+                .label("")
+                .min(Money.wons(10_000))
+                .max(Money.wons(100_000_000))
                 .shopId(shop.getId())
                 .build();
         PageRequest pageRequest = new PageRequest();
 
         Page<ProductResponse> productResponses = productService.selectByCondition(productCondition, pageRequest);
+        productResponses.getContent().forEach(System.out::println);
 
         //then
         productResponses.forEach(productResponse -> {

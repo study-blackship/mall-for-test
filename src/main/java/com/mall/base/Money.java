@@ -6,8 +6,9 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.function.Function;
 
-public class Money implements Serializable {
+public class Money implements Serializable, Comparable<Money> {
     public static final Money ZERO = Money.wons(0);
+    public static final Money BILLION = Money.wons(1_000_000_000);
 
     private final BigDecimal amount;
 
@@ -82,5 +83,10 @@ public class Money implements Serializable {
 
     public String toString() {
         return amount.toString() + "원";
+    }
+
+    @Override
+    public int compareTo(Money o) {
+        return this.amount.compareTo(o.amount);
     }
 }
