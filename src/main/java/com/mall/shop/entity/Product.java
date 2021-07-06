@@ -2,6 +2,7 @@ package com.mall.shop.entity;
 
 import com.mall.base.Base;
 import com.mall.base.Money;
+import com.mall.shop.request.ProductRequest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -24,14 +25,30 @@ public class Product extends Base implements Serializable {
     public Product() {
     }
 
-    @Builder
     public Product(Money price, String label, Shop shop) {
         this.price = price;
         this.label = label;
         this.shop = shop;
     }
 
+    @Builder
+    public Product(Long id, Money price, String label, Shop shop) {
+        super(id);
+        this.price = price;
+        this.label = label;
+        this.shop = shop;
+    }
+
+    public void joinShop(Shop shop) {
+        this.shop = shop;
+    }
+
     public void noMoreShop() {
         this.shop = null;
+    }
+
+    public void update(ProductRequest productRequest) {
+        this.label = productRequest.getLabel();
+        this.price = productRequest.getPrice();
     }
 }

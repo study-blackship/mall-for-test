@@ -1,6 +1,7 @@
 package com.mall.shop.mapper;
 
 import com.mall.shop.entity.Category;
+import com.mall.shop.request.CategoryRequest;
 import com.mall.shop.response.CategoryResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -10,4 +11,6 @@ public interface CategoryMapper {
     CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
 
     CategoryResponse categoryToResponse(Category category);
+
+    Category requestToCategory(CategoryRequest categoryRequest);
 }

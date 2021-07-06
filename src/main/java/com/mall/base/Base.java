@@ -1,5 +1,6 @@
 package com.mall.base;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 

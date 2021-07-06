@@ -1,9 +1,8 @@
-package com.mall;
+package com.mall.kmh.shop.totalTest;
 
 import com.mall.base.Money;
 import com.mall.base.PageRequest;
 import com.mall.shop.entity.*;
-import com.mall.shop.mapper.ShopMapper;
 import com.mall.shop.repository.CategoryRepository;
 import com.mall.shop.request.ShopCondition;
 import com.mall.shop.request.ShopRequest;
@@ -25,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Transactional
 @Rollback
-class Test_강민형 {
+class ShopTotalTest {
 
     @Autowired
     EntityManager em;
@@ -74,28 +73,6 @@ class Test_강민형 {
     }
 
     @Test
-    void ShopRequest로_Shop엔티티_생성() {
-        //given
-        Category category = new Category("침구류");
-        em.persist(category);
-        em.flush();
-        em.clear();
-
-        //when
-        ShopRequest shopRequest = new ShopRequest("이케아", new Location(Location.Dong.A, 1, 104), category.getId());
-        Shop shop = ShopMapper.INSTANCE.requestToShop(shopRequest);
-        shop.joinCategory(categoryRepository.findById(1L).orElseThrow());
-
-        //then
-        assertThat(shop).isNotNull();
-        assertThat(shop.getLabel()).isEqualTo(shopRequest.getLabel());
-        assertThat(shop.getLocation().getDong()).isEqualTo(shopRequest.getLocation().getDong());
-        assertThat(shop.getLocation().getHo()).isEqualTo(shopRequest.getLocation().getHo());
-        assertThat(shop.getLocation().getFloor()).isEqualTo(shopRequest.getLocation().getFloor());
-        assertThat(shop.getCategory().getLabel()).isEqualTo(category.getLabel());
-    }
-
-    @Test
     void Shop을_등록() {
         //given
         Category category = new Category("침구류");
@@ -135,13 +112,13 @@ class Test_강민형 {
 
         //when
         ShopRequest shopUpdateRequest = new ShopRequest(shop.getId(), "롯데마트", new Location(Location.Dong.B, 2, 201), category.getId());
-        shopService.updateShop(shopUpdateRequest);
+        ShopResponse shopResponse = shopService.updateShop(shopUpdateRequest);
 
         //then
         JPAQueryFactory query = new JPAQueryFactory(em);
 
         Shop updated = query.selectFrom(QShop.shop)
-                .where(QShop.shop.id.eq(shop.getId()))
+                .where(QShop.shop.id.eq(shopResponse.getId()))
                 .fetchOne();
 
         assertThat(updated).isNotNull();
