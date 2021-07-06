@@ -4,6 +4,7 @@ import com.mall.base.Base;
 import com.mall.base.Money;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "ORDER_ENTRY")
 @Getter
+@ToString(exclude = "order")
 public class OrderEntry extends Base implements Serializable {
     @ManyToOne
     private Order order;
@@ -27,7 +29,8 @@ public class OrderEntry extends Base implements Serializable {
     }
 
     @Builder
-    public OrderEntry(Order order, Long productId, Integer count, Money price) {
+    public OrderEntry(Long id, Order order, Long productId, Integer count, Money price) {
+        super(id);
         this.order = order;
         this.productId = productId;
         this.count = count;

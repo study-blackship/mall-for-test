@@ -3,6 +3,8 @@ package com.mall.order.entity;
 import com.mall.base.Base;
 import com.mall.base.Money;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,8 +13,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "ORDERS")
+@ToString
+@Getter
 public class Order extends Base implements Serializable {
-    enum OrderStatus {ORDERED, PAYED, DELIVERED}
+    public enum OrderStatus {ORDERED, PAYED, DELIVERED}
 
     private Long userId;
 
@@ -28,7 +32,8 @@ public class Order extends Base implements Serializable {
     }
 
     @Builder
-    public Order(Long userId, Long shopId, OrderStatus orderStatus, List<OrderEntry> orderEntryList) {
+    public Order(Long id, Long userId, Long shopId, OrderStatus orderStatus, List<OrderEntry> orderEntryList) {
+        super(id);
         this.userId = userId;
         this.shopId = shopId;
         this.orderStatus = orderStatus;
@@ -36,8 +41,19 @@ public class Order extends Base implements Serializable {
     }
 
     public void addOrderEntry(OrderEntry orderEntry) {
+        checkOrderEntryListIsNull();
         this.orderEntryList.add(orderEntry);
         orderEntry.mapToOrder(this);
+    }
+
+    public void addOrderEntry(List<OrderEntry> orderEntries) {
+        checkOrderEntryListIsNull();
+        this.orderEntryList.addAll(orderEntries);
+        orderEntries.forEach(orderEntry -> orderEntry.mapToOrder(this));
+    }
+
+    private void checkOrderEntryListIsNull() {
+        if (this.orderEntryList == null) this.orderEntryList = new ArrayList<>();
     }
 
     public Money calculateTotalPrice() {
