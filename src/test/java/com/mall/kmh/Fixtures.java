@@ -57,6 +57,7 @@ public class Fixtures {
         return Product.builder()
                 .id(1L)
                 .label("2층침대")
+                .shop(aShop().build())
                 .price(Money.wons(300_000_000));
     }
 
