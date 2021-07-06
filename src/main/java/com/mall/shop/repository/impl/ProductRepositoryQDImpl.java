@@ -47,6 +47,8 @@ public class ProductRepositoryQDImpl extends Querydsl4RepositorySupport implemen
     }
 
     private BooleanExpression priceBetween(Money min, Money max) {
+        if (min == null) min = Money.ZERO;
+        if (max == null) max = Money.BILLION;
         return product.price.between(min, max);
     }
 }
