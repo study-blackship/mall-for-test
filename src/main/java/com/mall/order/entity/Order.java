@@ -2,6 +2,7 @@ package com.mall.order.entity;
 
 import com.mall.base.Base;
 import com.mall.base.Money;
+import com.mall.order.service.OrderValidator;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -58,5 +59,9 @@ public class Order extends Base implements Serializable {
 
     public Money calculateTotalPrice() {
         return Money.sum(orderEntryList, OrderEntry::getPrice);
+    }
+
+    public void place(OrderValidator orderValidator) {
+        orderValidator.validate(this);
     }
 }

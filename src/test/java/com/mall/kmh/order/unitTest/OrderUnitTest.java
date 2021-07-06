@@ -15,6 +15,8 @@ import static com.mall.kmh.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OrderUnitTest {
+
+
     @Test
     void OrderEntryRequest로_OrderEntry엔티티_생성() {
         //given
@@ -77,4 +79,6 @@ public class OrderUnitTest {
         assertThat(orderResponse.getUserId()).isEqualTo(order.getUserId());
         assertThat(orderResponse.getEntryResponseList()).isNotNull();
     }
+
+
 }
