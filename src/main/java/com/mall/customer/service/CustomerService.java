@@ -27,4 +27,8 @@ public class CustomerService {
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
+
+    public CustomerDto selectCustomerDetail(Long id) {
+        return mapper.toDto(customerRepository.findById(id).orElseThrow(IllegalArgumentException::new));
+    }
 }
