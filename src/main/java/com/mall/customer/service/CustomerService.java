@@ -5,8 +5,8 @@ import com.mall.customer.service.dto.CustomerDto;
 import com.mall.customer.service.mapper.CustomerServiceMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +22,6 @@ public class CustomerService {
         return mapper.toDto(customerRepository.save(mapper.toEntity(dto)));
     }
 
-    @Transactional
     public List<CustomerDto> selectCustomerList() {
         return customerRepository.findAll().stream()
                 .map(mapper::toDto)
