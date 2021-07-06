@@ -7,6 +7,7 @@ import com.mall.customer.service.CustomerService;
 import com.mall.customer.service.dto.AddressDto;
 import com.mall.customer.service.dto.CustomerDto;
 import com.mall.customer.service.mapper.CustomerServiceMapper;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,9 +22,11 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -116,6 +119,28 @@ public class CustomerServiceTest {
             assertThat(result.get(i).getAddress().getStreet()).isEqualTo(db.get(i).getAddress().getStreet());
             assertThat(result.get(i).getBirth()).isEqualTo(db.get(i).getBirth());
         }
+
+    }
+
+    @Test
+    @DisplayName("Customer 상세 조회")
+    void selectCustomerDetail() {
+        // given
+        Customer expected = db.get(0);
+        when(repository.findById(anyLong())).thenReturn(Optional.of(expected));
+
+        // when
+        CustomerDto actually = service.selectCustomerDetail(0L);
+
+        // then
+        SoftAssertions.assertSoftly(soft -> {
+                    soft.assertThat(actually.getName()).isEqualTo(expected.getName());
+                    soft.assertThat(actually.getBirth()).isEqualTo(expected.getBirth());
+                    soft.assertThat(actually.getAddress().getCity()).isEqualTo(expected.getAddress().getCity());
+                    soft.assertThat(actually.getAddress().getDetail()).isEqualTo(expected.getAddress().getDetail());
+                    soft.assertThat(actually.getAddress().getStreet()).isEqualTo(expected.getAddress().getStreet());
+                }
+        );
 
     }
 }
