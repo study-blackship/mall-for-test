@@ -7,7 +7,6 @@ import com.mall.customer.service.CustomerService;
 import com.mall.customer.service.dto.AddressDto;
 import com.mall.customer.service.dto.CustomerDto;
 import com.mall.customer.service.mapper.CustomerServiceMapper;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
@@ -112,12 +112,16 @@ public class CustomerServiceTest {
         List<CustomerDto> result = service.selectCustomerList();
 
         // then
-        for (int i = 0; i < result.size(); i++) {
-            assertThat(result.get(i).getName()).isEqualTo(db.get(i).getName());
-            assertThat(result.get(i).getAddress().getCity()).isEqualTo(db.get(i).getAddress().getCity());
-            assertThat(result.get(i).getAddress().getDetail()).isEqualTo(db.get(i).getAddress().getDetail());
-            assertThat(result.get(i).getAddress().getStreet()).isEqualTo(db.get(i).getAddress().getStreet());
-            assertThat(result.get(i).getBirth()).isEqualTo(db.get(i).getBirth());
+        for (int index = 0; index < result.size(); index++) {
+            int i = index;
+            assertSoftly(s -> {
+                        s.assertThat(result.get(i).getName()).isEqualTo(db.get(i).getName());
+                        s.assertThat(result.get(i).getAddress().getCity()).isEqualTo(db.get(i).getAddress().getCity());
+                        s.assertThat(result.get(i).getAddress().getDetail()).isEqualTo(db.get(i).getAddress().getDetail());
+                        s.assertThat(result.get(i).getAddress().getStreet()).isEqualTo(db.get(i).getAddress().getStreet());
+                        s.assertThat(result.get(i).getBirth()).isEqualTo(db.get(i).getBirth());
+                    }
+            );
         }
 
     }
@@ -133,7 +137,7 @@ public class CustomerServiceTest {
         CustomerDto actually = service.selectCustomerDetail(0L);
 
         // then
-        SoftAssertions.assertSoftly(soft -> {
+        assertSoftly(soft -> {
                     soft.assertThat(actually.getName()).isEqualTo(expected.getName());
                     soft.assertThat(actually.getBirth()).isEqualTo(expected.getBirth());
                     soft.assertThat(actually.getAddress().getCity()).isEqualTo(expected.getAddress().getCity());
