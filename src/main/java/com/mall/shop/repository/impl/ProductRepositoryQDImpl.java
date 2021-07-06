@@ -1,14 +1,18 @@
 package com.mall.shop.repository.impl;
 
+import com.mall.base.Money;
 import com.mall.base.Querydsl4RepositorySupport;
 import com.mall.shop.entity.Product;
 import com.mall.shop.repository.ProductRepositoryQD;
 import com.mall.shop.request.ProductCondition;
-import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import static com.mall.shop.entity.QProduct.product;
 import static org.springframework.util.StringUtils.*;
@@ -26,7 +30,8 @@ public class ProductRepositoryQDImpl extends Querydsl4RepositorySupport implemen
                 .selectFrom(product)
                 .where(
                         labelContains(productCondition.getLabel()),
-                        shopIdEq(productCondition.getShopId())
+                        shopIdEq(productCondition.getShopId()),
+                        priceBetween(productCondition.getMin(), productCondition.getMax())
                 )
         );
     }
@@ -39,5 +44,9 @@ public class ProductRepositoryQDImpl extends Querydsl4RepositorySupport implemen
     private BooleanExpression shopIdEq(Long shopId) {
         if (shopId == null) return null;
         return product.shop.id.eq(shopId);
+    }
+
+    private BooleanExpression priceBetween(Money min, Money max) {
+        return product.price.between(min, max);
     }
 }

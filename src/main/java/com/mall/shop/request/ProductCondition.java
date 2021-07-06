@@ -8,13 +8,17 @@ import lombok.Data;
 public class ProductCondition {
     private String label;
     private Long shopId;
+    private Money min;
+    private Money max;
 
     public ProductCondition() {
     }
 
     @Builder
-    public ProductCondition(String label, Long shopId) {
+    public ProductCondition(String label, Long shopId, Money min, Money max) {
         this.label = label;
         this.shopId = shopId;
+        this.min = min;
+        this.max = max;
     }
 }
