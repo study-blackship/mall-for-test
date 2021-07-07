@@ -1,4 +1,6 @@
-package com.mall.base;
+package com.mall.base.converter;
+
+import com.mall.base.Money;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

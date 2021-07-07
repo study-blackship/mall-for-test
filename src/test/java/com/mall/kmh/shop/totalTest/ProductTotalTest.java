@@ -2,6 +2,7 @@ package com.mall.kmh.shop.totalTest;
 
 import com.mall.base.Money;
 import com.mall.base.PageRequest;
+import com.mall.base.Ratio;
 import com.mall.shop.entity.*;
 import com.mall.shop.request.ProductCondition;
 import com.mall.shop.request.ProductRequest;
@@ -38,7 +39,7 @@ public class ProductTotalTest {
         Category category = new Category("침구류");
         em.persist(category);
 
-        Shop shop = new Shop("이케아", new Location(Location.Dong.A, 1, 104), category);
+        Shop shop = new Shop("이케아", new Location(Location.Dong.A, 1, 104), category, Ratio.valueOf(0.1));
         em.persist(shop);
 
         Product product1 = new Product(Money.wons(100_000), "수류탄", shop);
@@ -77,7 +78,7 @@ public class ProductTotalTest {
         Category category = new Category("침구류");
         em.persist(category);
 
-        Shop shop = new Shop("이케아", new Location(Location.Dong.A, 1, 104), category);
+        Shop shop = new Shop("이케아", new Location(Location.Dong.A, 1, 104), category, Ratio.valueOf(0.1));
         em.persist(shop);
         em.flush();
         em.clear();
@@ -110,7 +111,7 @@ public class ProductTotalTest {
         Category category = new Category("침구류");
         em.persist(category);
 
-        Shop shop = new Shop("이케아", new Location(Location.Dong.A, 1, 104), category);
+        Shop shop = new Shop("이케아", new Location(Location.Dong.A, 1, 104), category, Ratio.valueOf(0.1));
         em.persist(shop);
 
         Product product = new Product(Money.wons(100_000), "수류탄", shop);
@@ -148,7 +149,7 @@ public class ProductTotalTest {
         Category category = new Category("침구류");
         em.persist(category);
 
-        Shop shop = new Shop("이케아", new Location(Location.Dong.A, 1, 104), category);
+        Shop shop = new Shop("이케아", new Location(Location.Dong.A, 1, 104), category, Ratio.valueOf(0.1));
         em.persist(shop);
 
         Product product = new Product(Money.wons(100_000), "수류탄", shop);

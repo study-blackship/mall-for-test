@@ -1,5 +1,8 @@
 package com.mall.kmh.order.unitTest;
 
+import com.mall.base.Money;
+import com.mall.base.Ratio;
+import com.mall.billing.entity.Billing;
 import com.mall.order.entity.Order;
 import com.mall.order.entity.OrderEntry;
 import com.mall.order.mapper.OrderMapper;
@@ -7,6 +10,9 @@ import com.mall.order.request.OrderEntryRequest;
 import com.mall.order.request.OrderRequest;
 import com.mall.order.response.OrderEntryResponse;
 import com.mall.order.response.OrderResponse;
+import com.mall.shop.entity.Category;
+import com.mall.shop.entity.Location;
+import com.mall.shop.entity.Shop;
 import org.junit.jupiter.api.Test;
 
 import java.util.stream.Collectors;
@@ -15,7 +21,6 @@ import static com.mall.kmh.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OrderUnitTest {
-
 
     @Test
     void OrderEntryRequest로_OrderEntry엔티티_생성() {
@@ -80,5 +85,16 @@ public class OrderUnitTest {
         assertThat(orderResponse.getEntryResponseList()).isNotNull();
     }
 
+    @Test
+    public void Commission_계산() {
+        //given
+        Shop shop = aShop().build();
+        Order order = aOrder().build();
 
+        //when
+        Money money = shop.calculateCommissionFee(order.calculateTotalPrice());
+
+        //then
+        assertThat(money).isEqualTo(order.calculateTotalPrice().times(shop.getCommissionRate().getRate()));
+    }
 }

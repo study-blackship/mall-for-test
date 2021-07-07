@@ -1,6 +1,7 @@
 package com.mall.kmh;
 
 import com.mall.base.Money;
+import com.mall.base.Ratio;
 import com.mall.order.entity.Order;
 import com.mall.order.entity.OrderEntry;
 import com.mall.order.request.OrderEntryRequest;
@@ -33,6 +34,7 @@ public class Fixtures {
                 .id(1L)
                 .label("이케아")
                 .category(category)
+                .commissionRate(Ratio.valueOf(0.1))
                 .location(Location.builder()
                         .dong(Location.Dong.A)
                         .floor(1)
@@ -50,6 +52,7 @@ public class Fixtures {
                         .floor(1)
                         .ho(104)
                         .build())
+                .commissionRate(Ratio.valueOf(0.1))
                 .categoryId(category.getId());
     }
 

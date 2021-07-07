@@ -2,10 +2,13 @@ package com.mall.order.entity;
 
 import com.mall.base.Base;
 import com.mall.base.Money;
+import com.mall.order.event.OrderDeliveredEvent;
+import com.mall.order.event.OrderEvent;
 import com.mall.order.service.OrderValidator;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.context.ApplicationEventPublisher;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -63,5 +66,20 @@ public class Order extends Base implements Serializable {
 
     public void place(OrderValidator orderValidator) {
         orderValidator.validate(this);
+        ordered();
+    }
+
+    public void ordered() {
+        this.orderStatus = OrderStatus.ORDERED;
+    }
+
+    public void payed(ApplicationEventPublisher publisher) {
+        this.orderStatus = OrderStatus.PAYED;
+        publisher.publishEvent(new OrderEvent(this));
+    }
+
+    public void delivered(ApplicationEventPublisher publisher) {
+        this.orderStatus = OrderStatus.DELIVERED;
+        publisher.publishEvent(new OrderDeliveredEvent(this));
     }
 }

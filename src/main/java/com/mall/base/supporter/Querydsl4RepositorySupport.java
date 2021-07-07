@@ -1,4 +1,4 @@
-package com.mall.base;
+package com.mall.base.supporter;
 
 import com.querydsl.core.types.EntityPath;
 import com.querydsl.core.types.Expression;
