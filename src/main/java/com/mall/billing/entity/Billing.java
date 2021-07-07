@@ -25,4 +25,8 @@ public class Billing extends Base implements Serializable {
         this.shopId = shopId;
         this.commission = commission;
     }
+
+    public void billCommissionFee(Money money) {
+        commission = commission.plus(money);
+    }
 }
