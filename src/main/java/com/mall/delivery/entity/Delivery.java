@@ -3,6 +3,7 @@ package com.mall.delivery.entity;
 import com.mall.base.Base;
 import com.mall.customer.entity.Address;
 import lombok.Builder;
+import lombok.Getter;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "DELIVERY")
+@Getter
 public class Delivery extends Base implements Serializable {
     public enum DeliveryStatus {DELIVERING, DELIVERED}
 
