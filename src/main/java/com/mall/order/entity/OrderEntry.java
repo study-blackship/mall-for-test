@@ -40,4 +40,8 @@ public class OrderEntry extends Base implements Serializable {
     public void mapToOrder(Order order) {
         this.order = order;
     }
+
+    public Money calculatePrice() {
+        return price.times(count);
+    }
 }

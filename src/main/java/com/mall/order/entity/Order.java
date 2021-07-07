@@ -61,7 +61,7 @@ public class Order extends Base implements Serializable {
     }
 
     public Money calculateTotalPrice() {
-        return Money.sum(orderEntryList, OrderEntry::getPrice);
+        return Money.sum(orderEntryList, OrderEntry::calculatePrice);
     }
 
     public void place(OrderValidator orderValidator) {
