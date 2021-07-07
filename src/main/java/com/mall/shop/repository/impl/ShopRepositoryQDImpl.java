@@ -1,6 +1,6 @@
 package com.mall.shop.repository.impl;
 
-import com.mall.base.Querydsl4RepositorySupport;
+import com.mall.base.supporter.Querydsl4RepositorySupport;
 import com.mall.shop.entity.Location;
 import com.mall.shop.entity.Shop;
 import com.mall.shop.repository.ShopRepositoryQD;
@@ -9,7 +9,6 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
 
 import static com.mall.shop.entity.QShop.shop;
 import static org.springframework.util.StringUtils.*;

@@ -2,6 +2,7 @@ package com.mall.kmh.shop.totalTest;
 
 import com.mall.base.Money;
 import com.mall.base.PageRequest;
+import com.mall.base.Ratio;
 import com.mall.shop.entity.*;
 import com.mall.shop.repository.CategoryRepository;
 import com.mall.shop.request.ShopCondition;
@@ -41,10 +42,10 @@ class ShopTotalTest {
         Category category = new Category("침구류");
         em.persist(category);
 
-        Shop shop1 = new Shop("이케아1호", new Location(Location.Dong.A, 1, 104), category);
-        Shop shop2 = new Shop("이케아2호", new Location(Location.Dong.B, 1, 104), category);
-        Shop shop3 = new Shop("이케아3호", new Location(Location.Dong.A, 2, 201), category);
-        Shop shop4 = new Shop("이케아4호", new Location(Location.Dong.B, 2, 204), category);
+        Shop shop1 = new Shop("이케아1호", new Location(Location.Dong.A, 1, 104), category, Ratio.valueOf(0.1));
+        Shop shop2 = new Shop("이케아2호", new Location(Location.Dong.B, 1, 104), category, Ratio.valueOf(0.1));
+        Shop shop3 = new Shop("이케아3호", new Location(Location.Dong.A, 2, 201), category, Ratio.valueOf(0.1));
+        Shop shop4 = new Shop("이케아4호", new Location(Location.Dong.B, 2, 204), category, Ratio.valueOf(0.1));
         em.persist(shop1);
         em.persist(shop2);
         em.persist(shop3);
@@ -81,7 +82,7 @@ class ShopTotalTest {
         em.clear();
 
         //when
-        ShopRequest shopRequest = new ShopRequest("이케아", new Location(Location.Dong.A, 1, 104), category.getId());
+        ShopRequest shopRequest = new ShopRequest("이케아", new Location(Location.Dong.A, 1, 104), category.getId(), Ratio.valueOf(0.1));
         ShopResponse shop = shopService.registerShop(shopRequest);
 
         //then
@@ -104,14 +105,14 @@ class ShopTotalTest {
         Category category = new Category("침구류");
         em.persist(category);
 
-        Shop shop = new Shop("이케아", new Location(Location.Dong.A, 1, 104), category);
+        Shop shop = new Shop("이케아", new Location(Location.Dong.A, 1, 104), category, Ratio.valueOf(0.1));
         em.persist(shop);
 
         em.flush();
         em.clear();
 
         //when
-        ShopRequest shopUpdateRequest = new ShopRequest(shop.getId(), "롯데마트", new Location(Location.Dong.B, 2, 201), category.getId());
+        ShopRequest shopUpdateRequest = new ShopRequest(shop.getId(), "롯데마트", new Location(Location.Dong.B, 2, 201), category.getId(), Ratio.valueOf(0.1));
         ShopResponse shopResponse = shopService.updateShop(shopUpdateRequest);
 
         //then
@@ -135,7 +136,7 @@ class ShopTotalTest {
         Category category = new Category("침구류");
         em.persist(category);
 
-        Shop shop = new Shop("이케아", new Location(Location.Dong.A, 1, 104), category);
+        Shop shop = new Shop("이케아", new Location(Location.Dong.A, 1, 104), category, Ratio.valueOf(0.1));
         em.persist(shop);
 
         Product product = new Product(Money.wons(10000), "침대", shop);
